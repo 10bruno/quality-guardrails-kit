@@ -186,18 +186,58 @@ if (Test-Path $sourceGuardrailsDir) {
     Write-Warning "Pasta 'context/guardrails' nao encontrada no kit em '$KitCachePath'. Guardrails nao foram sincronizados -- confirme se o kit esta atualizado."
 }
 
+# --- Sincroniza context/achados/ e context/piramide-de-testes.md ----------
+#
+# Achado real de uso (27/07/2026, primeira execucao em ambiente real): os
+# prompt files e o proprio AGENTS.md referenciam esses arquivos como leitura
+# LOCAL obrigatoria (AGENTS.md manda "consultar context/achados/" antes de
+# inventar API, e 01-golden-files.prompt.md manda ler a piramide) -- mas
+# nunca estavam na lista de sincronizacao. Um agente rodando contra um
+# servico ja sincronizado buscava esses arquivos, achava 0 resultados, e
+# ficava sem a informacao que deveria ter.
+
+$sourceContextDir = Join-Path $KitCachePath "context"
+$destContextDir = ".\context"
+$contextSincronizados = 0
+
+if (Test-Path $sourceContextDir) {
+    $sourcePiramide = Join-Path $sourceContextDir "piramide-de-testes.md"
+    if (Test-Path $sourcePiramide) {
+        if (-not (Test-Path $destContextDir)) {
+            New-Item -ItemType Directory -Path $destContextDir -Force | Out-Null
+        }
+        Copy-Item -Path $sourcePiramide -Destination (Join-Path $destContextDir "piramide-de-testes.md") -Force
+        $contextSincronizados++
+    }
+
+    $sourceAchadosDir = Join-Path $sourceContextDir "achados"
+    $destAchadosDir = Join-Path $destContextDir "achados"
+    if (Test-Path $sourceAchadosDir) {
+        if (-not (Test-Path $destAchadosDir)) {
+            New-Item -ItemType Directory -Path $destAchadosDir -Force | Out-Null
+        }
+        Get-ChildItem -Path $sourceAchadosDir -Filter "*.md" | ForEach-Object {
+            Copy-Item -Path $_.FullName -Destination (Join-Path $destAchadosDir $_.Name) -Force
+            $contextSincronizados++
+        }
+    }
+} else {
+    Write-Warning "Pasta 'context' nao encontrada no kit em '$KitCachePath'."
+}
+
 Write-Host ""
 Write-Host "Sincronizado:" -ForegroundColor Green
 Write-Host "  AGENTS.md                            $(if ($agentsExistiaAntes) {'(atualizado)'} else {'(novo)'})"
 Write-Host "  .github/copilot-instructions.md       $(if ($copilotExistiaAntes) {'(atualizado)'} else {'(novo)'})"
 Write-Host "  .github/prompts/*.prompt.md           ($promptsSincronizados arquivo(s))"
 Write-Host "  scripts/*.py + context/guardrails/scope-rules.json ($guardrailsSincronizados arquivo(s))"
+Write-Host "  context/piramide-de-testes.md + context/achados/*.md ($contextSincronizados arquivo(s))"
 Write-Host ""
 Write-Host "PROXIMO PASSO (manual, nao automatizado por proposito):" -ForegroundColor Cyan
 Write-Host "  git status"
 Write-Host "  git diff -- AGENTS.md"
-Write-Host "  git add AGENTS.md .github/copilot-instructions.md .github/prompts/ scripts/ context/guardrails/scope-rules.json"
-Write-Host "  git commit -m 'docs: sincroniza AGENTS.md, prompt files e guardrails do quality-guardrails-kit'"
+Write-Host "  git add AGENTS.md .github/copilot-instructions.md .github/prompts/ scripts/ context/"
+Write-Host "  git commit -m 'docs: sincroniza AGENTS.md, prompt files, guardrails e context do quality-guardrails-kit'"
 Write-Host ""
 Write-Host "Revise o diff antes de commitar -- este script nunca commita sozinho." -ForegroundColor Yellow
 Write-Host ""
