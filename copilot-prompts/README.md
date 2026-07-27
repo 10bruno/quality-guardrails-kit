@@ -32,7 +32,7 @@ já existe no serviço — nem todo serviço precisa das duas (um serviço
 sem banco de dados, por exemplo, não precisa de Testcontainers).
 
 **Se este serviço também está passando por modernização de versão**
-(via `java-modernization-kit`, repositório separado): as ondas de
+(via `modernization-kit`, repositório separado): as ondas de
 versão vivem naquele kit, com seu próprio scanner e prompts. Os dois
 scanners coletam parte dos mesmos fatos brutos (versão de Java/Boot),
 de propósito — cada kit decide algo diferente com eles.

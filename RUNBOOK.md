@@ -12,14 +12,14 @@
 > **Convenção:** referências futuras a ferramenta/agente interno da
 > empresa (ex: APM já existente, para a onda de performance) seguem o
 > mesmo padrão de link-em-texto-sem-clone usado entre este kit e o
-> `java-modernization-kit`. Procure por `LINK-EMPRESA` neste
+> `modernization-kit`. Procure por `LINK-EMPRESA` neste
 > repositório — sinaliza lacuna deliberada, preenchida quando a
 > ferramenta real for confirmada.
 
 - Serviço já está na última versão (ou não tem necessidade de
   modernização), mas precisa de mais garantia de qualidade de teste.
 - Serviço vai passar por modernização de versão — neste caso, use
-  **junto** com o `java-modernization-kit` (ele referencia este aqui
+  **junto** com o `modernization-kit` (ele referencia este aqui
   como pré-requisito logo após a Onda 0 daquele kit, e checkpoint de
   novo na Onda -1 e depois da Onda 3).
 
@@ -182,7 +182,7 @@ melhorar. Isso vira critério de entrada mensurável, não julgamento
 subjetivo de "os testes parecem bons".
 
 **⚠️ Se este serviço também está passando por modernização de versão
-(via `java-modernization-kit`), a posição no processo importa — rode
+(via `modernization-kit`), a posição no processo importa — rode
 isto ANTES da Onda 1 daquele kit (upgrade de Java), não depois da
 Onda 4 (tudo migrado).** O que o mutation
 score mede — se os testes pegam bug na lógica de negócio — é

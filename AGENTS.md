@@ -9,7 +9,7 @@ Leia este arquivo por inteiro no início de toda sessão.
 
 Este kit é standalone — não depende de nenhum outro repositório para
 funcionar. Se você está numa sessão de modernização de versão (Java/
-Spring), esse é outro programa, outro kit (`java-modernization-kit`);
+Spring), esse é outro programa, outro kit (`modernization-kit`);
 as regras abaixo continuam valendo do mesmo jeito, mas nada aqui
 pressupõe isso.
 

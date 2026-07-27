@@ -41,5 +41,5 @@
     },
     "processo": "trabalho feito via Claude Code (aba Code do Claude Desktop) apontado direto para o repositorio, com AGENTS.md sincronizado do kit. Revisado neste chat antes de aprovacao final -- auditoria de codigo real (nao so relato), incluindo verificacao cruzada dos Config.java para confirmar propagacao do statement_inspector."
   },
-  "nota_split": "Este arquivo e a metade 'rede de seguranca' da ficha original do piloto ecommerce. A metade 'modernizacao de versao' vive em java-modernization-kit/context/servicos/ecommerce.json -- mesma origem, repositorios diferentes, dividido em 24/07/2026 quando os dois kits foram separados."
+  "nota_split": "Este arquivo e a metade 'rede de seguranca' da ficha original do piloto ecommerce. A metade 'modernizacao de versao' vive em modernization-kit/context/servicos/ecommerce.json -- mesma origem, repositorios diferentes, dividido em 24/07/2026 quando os dois kits foram separados."
 }

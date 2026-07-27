@@ -55,7 +55,7 @@ tem rede de segurança completa para as integrações encontradas" é
 resposta válida e esperada, não falha do diagnóstico.
 
 **Nota se este serviço também está passando por modernização de
-versão** (via `java-modernization-kit`, repositório separado): esta
+versão** (via `modernization-kit`, repositório separado): esta
 ficha de diagnóstico serve de base para aquele processo também — não
 precisa rodar dois scanners diferentes que descobrem os mesmos fatos
 de versão duas vezes. Se o outro kit também está sincronizado aqui,

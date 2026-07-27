@@ -18,5 +18,5 @@
     }
   },
 
-  "_nota_ondas_nao_listadas": "O linter avisa e passa (nao bloqueia por falta de configuracao). Se este servico TAMBEM usa o java-modernization-kit, as ondas dele (onda-0-gradle, onda-3-boot-major, etc) precisam ser adicionadas aqui tambem, manualmente -- os dois kits compartilham o MESMO arquivo scope-rules.json no repositorio do servico quando ambos sao usados juntos. Ver java-modernization-kit/README.md para o procedimento de mesclagem."
+  "_nota_ondas_nao_listadas": "O linter avisa e passa (nao bloqueia por falta de configuracao). Se este servico TAMBEM usa o modernization-kit, as ondas dele (onda-0-gradle, onda-3-boot-major, etc) precisam ser adicionadas aqui tambem, manualmente -- os dois kits compartilham o MESMO arquivo scope-rules.json no repositorio do servico quando ambos sao usados juntos. Ver modernization-kit/README.md para o procedimento de mesclagem."
 }

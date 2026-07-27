@@ -41,7 +41,7 @@ confirmação antes de qualquer commit.
 **Próximo passo (inclua isto explicitamente no relatório acima, não
 como nota separada):** esta é a última onda **automática** deste kit.
 Se este serviço também está passando por modernização de versão (via
-`java-modernization-kit`, repositório separado), o próximo passo é
+`modernization-kit`, repositório separado), o próximo passo é
 voltar para lá — a rede de segurança agora está completa (golden
 files, Testcontainers, cobertura unitária) para a Onda 3 daquele kit.
 

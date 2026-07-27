@@ -16,11 +16,11 @@ frequentemente independente da necessidade de subir versão.
 - **Serviço já na última versão**, ou sem necessidade de modernização,
   mas que precisa de mais garantia de qualidade de teste.
 - **Serviço que vai passar por modernização de versão** — use este kit
-  junto com o `java-modernization-kit` (repositório separado). Aquele
+  junto com o `modernization-kit` (repositório separado). Aquele
   kit referencia este aqui como pré-requisito da Onda 2, e checkpoint
   depois das Ondas 3 e 4.
 
-Este kit nunca depende do `java-modernization-kit` — a relação é
+Este kit nunca depende do `modernization-kit` — a relação é
 sempre numa direção só.
 
 ---

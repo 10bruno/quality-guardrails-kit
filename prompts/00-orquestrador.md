@@ -1,6 +1,6 @@
 # Prompt 00 — Orquestrador de ondas (rede de segurança)
 
-> Versão simplificada do orquestrador do `java-modernization-kit` —
+> Versão simplificada do orquestrador do `modernization-kit` —
 > só duas ondas aqui, não precisa da mesma complexidade de sequência.
 
 ## O laço
@@ -32,7 +32,7 @@ que isso quebrou e como resolvo", a resposta já existiria em algum
 arquivo daqui? Se não, é achado novo — PR separado, neste repositório,
 seguindo o formato já estabelecido em `context/achados/`.
 
-**Se este serviço também usa o `java-modernization-kit`:** achado
+**Se este serviço também usa o `modernization-kit`:** achado
 sobre *versão específica* de Java/Boot/Jackson não pertence aqui — vai
 para aquele repositório. Achado sobre *técnica de teste* fica aqui.
 
