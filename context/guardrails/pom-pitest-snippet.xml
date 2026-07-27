@@ -1,0 +1,60 @@
+<!--
+  PIT (mutation testing) -- Maven.
+  Adicionar dentro de <build><plugins> do pom.xml.
+
+  NAO TESTADO POR MIM -- sem acesso ao Maven Central/plugin repository
+  no ambiente onde isto foi escrito. Confirme a versao mais recente
+  (https://mvnrepository.com/artifact/org.pitest/pitest-maven) antes
+  de usar -- em 22/07/2026, o nucleo do PIT (org.pitest:pitest) estava
+  em 1.25.5; pitest-maven segue numeracao proxima historicamente, mas
+  confirme o numero exato em vez de assumir.
+
+  Java 11 (linha deste projeto) e terreno maduro para o PIT -- ao
+  contrario de Java 25, nao ha historico de incompatibilidade recente
+  conhecida aqui.
+
+  mutationThreshold=70 fara o build FALHAR se menos de 70% dos mutantes
+  forem mortos -- esse numero e ponto de partida, nao verdade absoluta.
+  Ajuste com base no mutation score real do seu primeiro serviço-piloto
+  rodando isto, nao adivinhe.
+-->
+<plugin>
+  <groupId>org.pitest</groupId>
+  <artifactId>pitest-maven</artifactId>
+  <version>1.15.0</version>
+  <!-- ^ confirme versao atual antes de usar -->
+  <configuration>
+    <!-- pacotes com o codigo de producao real -- ajuste ao seu projeto -->
+    <targetClasses>
+      <param>com.example.demo.core.*</param>
+      <param>com.example.demo.infrastructure.*</param>
+    </targetClasses>
+    <!-- pacotes com os testes que devem pegar os mutantes -->
+    <targetTests>
+      <param>com.example.demo.*</param>
+    </targetTests>
+    <mutationThreshold>70</mutationThreshold>
+    <!-- falha o build se a cobertura de linha cair abaixo disso tambem -->
+    <coverageThreshold>60</coverageThreshold>
+    <outputFormats>
+      <outputFormat>HTML</outputFormat>
+      <outputFormat>XML</outputFormat>
+    </outputFormats>
+  </configuration>
+  <executions>
+    <execution>
+      <id>pit-mutation-coverage</id>
+      <phase>verify</phase>
+      <goals>
+        <goal>mutationCoverage</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+
+<!--
+  Rodar manualmente, fora do pipeline, para ver o relatorio antes de
+  confiar nele:
+    mvn org.pitest:pitest-maven:mutationCoverage
+  Relatorio HTML gerado em target/pit-reports/
+-->

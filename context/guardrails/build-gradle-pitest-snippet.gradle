@@ -1,0 +1,41 @@
+// PIT (mutation testing) -- Gradle.
+// Adicionar em build.gradle.
+//
+// Versao 1.19.0 confirmada como atual no Gradle Plugin Portal
+// (https://plugins.gradle.org/plugin/info.solidsoft.pitest) em
+// 22/07/2026 -- NAO era a versao original deste snippet (1.15.0),
+// que esta documentada como incompativel com JDK 17 em guias reais.
+// Se voce estiver lendo isto meses depois, reconfirme a versao atual
+// antes de usar -- nao assuma que 1.19.0 continua sendo a mais nova.
+//
+// ATENCAO -- Java 25 especificamente: existe issue real e recente no
+// repositorio do PIT ("Compatibility with java 25",
+// github.com/hcoles/pitest/issues/1439, aberta dez/2025) e um changelog
+// entry associado ("Fix BigDecimal and BigInteger mutators for java 25").
+// Suporte a Java 25 e recente, nao maduro ha anos como Java 11/17 --
+// rode manualmente primeiro e espere que possa nao funcionar de
+// primeira, mesmo com a versao atualizada.
+//
+// mutationThreshold = 70 fara ./gradlew pitest FALHAR se menos de 70%
+// dos mutantes forem mortos -- ponto de partida, nao verdade absoluta.
+// Ajuste com base no mutation score real do primeiro servico rodando
+// isto, nao adivinhe.
+
+plugins {
+    id 'info.solidsoft.pitest' version '1.19.0'
+}
+
+pitest {
+    // pacotes com codigo de producao real -- ajuste ao seu projeto
+    targetClasses = ['br.com.ecommerce.domain.*', 'br.com.ecommerce.controller.*']
+    targetTests = ['br.com.ecommerce.*']
+    mutationThreshold = 70
+    coverageThreshold = 60
+    outputFormats = ['HTML', 'XML']
+    junit5PluginVersion = '1.2.1' // tambem confira se ha versao mais nova
+}
+
+// Rodar manualmente, fora do pipeline, para ver o relatorio antes de
+// confiar nele:
+//   ./gradlew pitest
+// Relatorio HTML gerado em build/reports/pitest/

@@ -1,0 +1,45 @@
+{
+  "servico": "ecommerce",
+  "arquetipo": "mvc-jpa-multi-datasource",
+  "confianca_arquetipo": "alta",
+  "contexto": "estudo_ou_poc",
+  "stack_web": "web",
+  "integracoes": [
+    {
+      "tipo": "mysql",
+      "resolvido_por_padrao_sem_qualifier": true,
+      "evidencia": "MysqlConfig.java:24 (@Primary, @Bean(name=\"dataSource\"))"
+    },
+    {
+      "tipo": "postgres",
+      "resolvido_por_padrao_sem_qualifier": false,
+      "evidencia": "PostgresConfig.java:26 (@Bean(name=\"postgresDataSource\"), acessado via @Qualifier explícito)"
+    }
+  ],
+  "criticidade": "a_confirmar_com_dono",
+  "rede_de_seguranca_onda_2": {
+    "status": "concluida",
+    "pr": "#25 (golden files) + PR Testcontainers duplo (mergeado)",
+    "golden_files": {
+      "pares_completos": [
+        "Customer",
+        "Product",
+        "Inventory",
+        "PaymentHistoric"
+      ],
+      "cobertura": "os 4 controllers confirmados afetados por Jackson 2->3 no dryRun (ver dryrun-boot4-achados.md)",
+      "achado_principal": "dateRegister (LocalDate) serializa como string ISO, nao timestamp -- WRITE_DATES_AS_TIMESTAMPS ja efetivamente desligado hoje via autoconfig do Boot. Golden file agora e o contrato formal desse comportamento para a Onda 4 (Jackson 3 defaults).",
+      "metodo": "teste de descoberta antes de fixar JSON (nunca chutado), usando @JsonTest + JacksonTester"
+    },
+    "testcontainers_duplo": {
+      "arquivo": "DualDatabasePersistenceGoldenTest.java",
+      "cobertura": "grava e le nos dois bancos reais (Postgres: Customer/Inventory/Product: MySQL: PaymentHistoric), usando as mesmas classes PostgresConfig/MysqlConfig de producao",
+      "sql_baseline": "SqlCapturingStatementInspector captura SQL real via hibernate.session_factory.statement_inspector, comparado contra arquivos versionados em src/test/resources/sql-baseline/ -- baseline pre-Hibernate-7 real, nao teorico",
+      "guarda_n_mais_1": "contagem exata (nao limite) de SELECT/INSERT por operacao. Descoberta: 2 SELECT + 1 INSERT por save (nao 1+1) -- merge() faz SELECT de existencia porque @Id e atribuido manualmente, sem @GeneratedValue",
+      "achado_processo": "ddl-auto=create-drop causava race condition com Testcontainers no shutdown (Hibernate tentando DROP TABLE em container ja derrubado) -- 2 timeouts de 30s por execucao. Corrigido para ddl-auto=create. Ver testcontainers-ddl-auto-shutdown.md",
+      "achado_tecnico": "spring.jpa.properties.* via @DynamicPropertySource propaga para multiplos EntityManagerFactory manuais mesmo sem .properties() explicito em cada Config -- confirmado empiricamente"
+    },
+    "processo": "trabalho feito via Claude Code (aba Code do Claude Desktop) apontado direto para o repositorio, com AGENTS.md sincronizado do kit. Revisado neste chat antes de aprovacao final -- auditoria de codigo real (nao so relato), incluindo verificacao cruzada dos Config.java para confirmar propagacao do statement_inspector."
+  },
+  "nota_split": "Este arquivo e a metade 'rede de seguranca' da ficha original do piloto ecommerce. A metade 'modernizacao de versao' vive em java-modernization-kit/context/servicos/ecommerce.json -- mesma origem, repositorios diferentes, dividido em 24/07/2026 quando os dois kits foram separados."
+}
