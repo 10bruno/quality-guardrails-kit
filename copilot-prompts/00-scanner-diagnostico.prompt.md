@@ -61,8 +61,40 @@ precisa rodar dois scanners diferentes que descobrem os mesmos fatos
 de versão duas vezes. Se o outro kit também está sincronizado aqui,
 mencione isso no resumo.
 
-**Saída:** resumo estruturado (comentário no chat, não precisa criar
-arquivo) com: arquétipo, integrações encontradas, cobertura existente,
-e o único próximo comando recomendado.
+**Saída — crie ou atualize `context/servicos/<nome-do-repositório>.json`
+neste repositório (única exceção à regra de não editar arquivo — a
+ficha em si é o produto deste passo, não código):**
 
-Não edite nenhum arquivo neste passo — é só leitura e diagnóstico.
+```json
+{
+  "servico": "<nome-do-repositorio>",
+  "arquetipo": "<detectado no passo 2>",
+  "stack_web": "<detectado>",
+  "integracoes": ["<detectadas>"],
+  "criticidade": null,
+  "porte": null,
+  "nivel_autonomia_permitido": null,
+  "cobertura_rede_seguranca": {
+    "golden_files": false,
+    "testcontainers": false,
+    "cobertura_unitaria_pct": null,
+    "e2e": false
+  },
+  "nao_determinado": ["<o que nao deu para confirmar>"]
+}
+```
+
+- `criticidade`, `porte`, `nivel_autonomia_permitido` ficam **sempre
+  `null` na criação** — são atribuídos por humano depois (regra: você
+  nunca infere isso sozinho, mesmo com boa intenção).
+- **Se o arquivo já existir**, leia primeiro e **atualize só os campos
+  factuais** (`integracoes`, `cobertura_rede_seguranca`,
+  `nao_determinado`) — nunca sobrescreva `criticidade`, `porte`,
+  `nivel_autonomia_permitido` se já tiverem sido preenchidos por um
+  humano, mesmo que pareçam desatualizados. Reporte a diferença em vez
+  de decidir sozinho.
+- Depois de criar/atualizar, reporte no chat: arquétipo, integrações
+  encontradas, cobertura existente, e o único próximo comando
+  recomendado.
+
+Fora da ficha, não edite nenhum outro arquivo neste passo.
